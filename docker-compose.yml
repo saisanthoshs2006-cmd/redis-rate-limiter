@@ -1,0 +1,19 @@
+services:
+  
+
+    redis:
+      image: redis:7
+      container_name: rate-limiter-redis
+      ports:
+        - "6379:6379"
+
+    app:
+      image: rate-limiter:1.0
+      container_name: rate-limiter-app
+      ports:
+        - "8080:8080"
+      environment:
+        SPRING_DATA_REDIS_HOST: redis
+        SPRING_DATA_REDIS_PORT: 6379
+      depends_on:
+        - redis
